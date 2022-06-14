@@ -100,9 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (guesses.length < 6) {
             guessInput.value = ''
             const guessRectangle = document.getElementById(String(2 * guesses.length + 1))
-            // guessRectangle.setAttribute('data-animation', 'flip-in')
             guessRectangle.innerText = guess
-            // setTimeout(() => guessRectangle.setAttribute('data-animation', 'flip-out'), 100)
             const hintSquare = document.getElementById(String(2 * guesses.length + 2))
             hintSquare.setAttribute('data-animation', 'flip-in')
             setTimeout(() => hintSquare.setAttribute('data-animation', 'flip-out'), 100)
@@ -125,7 +123,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 copyButton.style.display = 'block'
                 document.getElementById('answer').innerText = targetCountry.toUpperCase() + '\nPopulation: ' + targetPopulation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
-            hintSquare.appendChild(icon)
+            setTimeout(() => hintSquare.appendChild(icon), 100)
             guesses.push(guess)
             localStorage.setItem('guesses', JSON.stringify(guesses))
         }
