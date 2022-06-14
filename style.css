@@ -1,0 +1,458 @@
+:root {
+    --border: #d3d6da;
+    --title: #1a1a1b;
+    --text: #ffffff;
+    --description: #787c7e;
+    --checked: #538d4e;
+    --icon: #878a8c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+#container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--text);
+}
+
+#game {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-button {
+    border: none;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.title {
+    color: var(--title);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.125rem;
+    margin: 0.4rem 0 0.4rem 0;
+    text-align: center;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+#board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    grid-gap: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.rectangle {
+    border: 2px solid var(--border);
+    width: 300px;
+    height: 40px;
+    color: var(--title);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.square {
+    border: 2px solid var(--border);
+    width: 40px;
+    height: 40px;
+    color: var(--title);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto 8px;
+    touch-action: manipulation;
+}
+
+#button-container button {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    border: 0;
+    padding: 0;
+    height: 40px;
+    cursor: pointer;
+    background-color: var(--border);
+    color: var(--title);
+    flex-grow: 0.1;
+    margin-right: 6px;
+    border-radius: 4px;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+/*
+Media tags
+ */
+
+@media (max-width: 360px) {
+    .title {
+        font-size: 22px;
+        letter-spacing: 0.0625rem;
+    }
+
+    .rectangle {
+        width: calc(20vw - 12px);
+        height: calc(20vw - 12px);
+        margin-top: calc(36px - 10vw);
+        margin-bottom: calc(36px - 10vw)
+    }
+}
+
+@media (max-width: 520px) {
+    .close {
+        padding: 0 16px;
+    }
+
+    .instructions, .settings {
+        padding: 0 16px;
+    }
+}
+
+/*
+Modal
+ */
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: var(--text);
+    max-width: 500px;
+    flex-direction: column;
+}
+
+.modal header {
+    border-bottom: none;
+}
+
+.modal-container h1 {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.instructions, .settings {
+    font-size: 16px;
+    color: var(--title);
+}
+
+a {
+    color: var(--title);
+}
+
+.instructions p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*border-bottom: 1px solid var(--border);*/
+    padding: 16px 0;
+}
+
+.modal-title {
+    color: var(--title);
+}
+
+.setting-title {
+    font-size: 18px;
+}
+
+.setting-description {
+    font-size: 12px;
+    color: var(--description);
+}
+
+/* The Close Button */
+.close {
+    cursor: pointer;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+path {
+    fill: var(--icon);
+}
+
+#footnote {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    color: var(--description);
+    font-size: 16px;
+    text-align: center;
+}
+
+/*
+Sliders
+ */
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    width: 32px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #878a8c;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: calc(100% - 4px);
+    width: 50%;
+    left: 2px;
+    top: 2px;
+    background-color: #ffffff;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--checked);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--checked);
+}
+
+input:checked + .slider:before {
+    -ms-transform: translateX(calc(100% - 4px));
+    transform: translateX(calc(100% - 4px));
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: inline-block;
+    margin-right: 4px;
+}
+input {
+    border: 1px solid transparent;
+    background-color: var(--border);
+    color: var(--title);
+    outline-color: var(--icon);
+    padding: 10px;
+    font-size: 16px;
+}
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid var(--icon);
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    color: var(--title);
+    /*position the autocomplete items to be the same width as the container:*/
+    bottom: 100%;
+    left: 0;
+    right: 0;
+}
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: var(--border);
+    border-top: 1px solid var(--icon);
+}
+.autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: var(--icon);
+}
+.autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: var(--description) !important;
+    color: #ffffff;
+}
+#answer {
+    color: var(--title);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+/*
+Animations
+ */
+
+[data-animation="bounce"] {
+    animation-name: Bounce;
+    animation-duration: 1000ms;
+}
+
+@keyframes Bounce {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+    80% {
+        transform: translateY(2px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+[data-animation="shake"] {
+    animation-name: Shake;
+    animation-duration: 1000ms;
+}
+
+@keyframes Shake {
+    10%,
+    90% {
+        transform: translateX(-1px);
+    }
+
+    20%,
+    80% {
+        transform: translateX(2px);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translateX(-4px);
+    }
+
+    40%,
+    60% {
+        transform: translateX(4px);
+    }
+}
+
+[data-animation='flip-in'] {
+    animation-name: FlipIn;
+    animation-duration: 250ms;
+    animation-timing-function: ease-in;
+}
+
+@keyframes FlipIn {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(-90deg);
+    }
+}
+
+[data-animation='flip-out'] {
+    animation-name: FlipOut;
+    animation-duration: 250ms;
+    animation-timing-function: ease-in;
+}
+
+@keyframes FlipOut {
+    0% {
+        transform: rotateX(-90deg);
+    }
+    100% {
+        transform: rotateX(0);
+    }
+}
