@@ -100,12 +100,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (guesses.length < 6) {
             guessInput.value = ''
             const guessRectangle = document.getElementById(String(2 * guesses.length + 1))
-            guessRectangle.setAttribute('data-animation', 'flip-in')
+            // guessRectangle.setAttribute('data-animation', 'flip-in')
             guessRectangle.innerText = guess
-            setTimeout(() => guessRectangle.setAttribute('data-animation', 'flip-out'), 100)
+            // setTimeout(() => guessRectangle.setAttribute('data-animation', 'flip-out'), 100)
             const hintSquare = document.getElementById(String(2 * guesses.length + 2))
             hintSquare.setAttribute('data-animation', 'flip-in')
-            setTimeout(() => hintSquare.setAttribute('data-animation', 'flip-out'), 125)
+            setTimeout(() => hintSquare.setAttribute('data-animation', 'flip-out'), 100)
             let icon = document.createElement('i')
             if (targetPopulation > populations[countries.indexOf(guess)]) {
                 icon.setAttribute('class', 'fa-solid fa-arrow-up')
