@@ -293,7 +293,7 @@ Sliders
 }
 
 input:checked + .slider {
-    background-color: var(--checked);
+    background-color: var(--icon);
 }
 
 input:focus + .slider {
