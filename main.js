@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     autocomplete(guessInput, countries.slice().sort())
 
     function addGuess(guess) {
-        if (guesses.length < 6) {
+        if (guesses.length < 8) {
             guessInput.value = ''
             const guessRectangle = document.getElementById(String(2 * guesses.length + 1))
             guessRectangle.innerText = guess
@@ -115,10 +115,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 guessInput.style.display = 'none'
                 guessButton.style.display = 'none'
                 copyButton.style.display = 'block'
-                for (let i = 2 * guesses.length + 3; i <= 12; i++) document.getElementById(String(i)).style.display = 'none'
+                for (let i = 2 * guesses.length + 3; i <= 16; i++) document.getElementById(String(i)).style.display = 'none'
                 document.getElementById('answer').innerText = targetCountry.toUpperCase() + '\nPopulation: ' + targetPopulation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
-            if (targetPopulation !== populations[countries.indexOf(guess)] && guesses.length === 5) {
+            if (targetPopulation !== populations[countries.indexOf(guess)] && guesses.length === 7) {
                 guessInput.style.display = 'none'
                 guessButton.style.display = 'none'
                 copyButton.style.display = 'block'
@@ -147,8 +147,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => square.removeAttribute('data-animation'), 1000)
         }
 
-        let game = 'Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' ' + guesses.length + '/6\n'
-        for (let i = 1; i <= 6; i++) {
+        let game = 'Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' ' + guesses.length + '/8\n'
+        for (let i = 1; i <= 8; i++) {
             const icon = document.getElementById(String(i * 2)).childNodes[0]
             if (icon) {
                 const classes = icon.getAttribute('class')
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         game += 'https://tusharmurali.github.io/pople'
         if (!game.includes('☑️'))
-            game = game.replace('Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' ' + guesses.length + '/6\n','Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' X/6\n')
+            game = game.replace('Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' ' + guesses.length + '/8\n','Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' X/8\n')
         navigator.clipboard.writeText(game)
     })
     instructionsButton.addEventListener('click', () => {
