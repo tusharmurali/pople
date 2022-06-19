@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         hash |= 0
     }
     localStorage.setItem('hash', String(hash))
-    const targetCountry = countries[hash % 235]
-    const targetPopulation = populations[hash % 235]
+    const targetCountry = countries[hash % 150]
+    const targetPopulation = populations[hash % 150]
 
     const root = document.documentElement
     const guessInput = document.getElementById('guessInput')
