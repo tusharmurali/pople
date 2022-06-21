@@ -23,7 +23,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const [instructionsModal, settingsModal] = document.getElementsByClassName('modal')
     const [instructionsButton, settingsButton] = document.getElementsByClassName('modal-button')
     const closeButtons = document.getElementsByClassName('close')
+    const easyModeButton = document.getElementById('easyMode')
     const darkModeButton = document.getElementById('darkMode')
+
+    if (localStorage.getItem('easyMode')) {
+        easyModeButton.checked = JSON.parse(localStorage.getItem('easyMode'))
+    } else {
+        easyModeButton.checked = false
+    }
+    easyModeButton.disabled = false
+    easyModeButton.addEventListener('click', () => localStorage.setItem('easyMode', easyModeButton.checked))
 
     let guesses = []
     const prevGuesses = JSON.parse(localStorage.getItem('guesses'))
@@ -100,9 +109,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function addGuess(guess) {
         if (guesses.length < 8) {
+            easyModeButton.disabled = true
             guessInput.value = ''
             const guessRectangle = document.getElementById(String(2 * guesses.length + 1))
-            guessRectangle.innerText = guess
+            guessRectangle.innerText = guess + (easyModeButton.checked ? ': ' + populations[countries.indexOf(guess)].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')
             const hintSquare = document.getElementById(String(2 * guesses.length + 2))
             hintSquare.setAttribute('data-animation', 'flip-in')
             setTimeout(() => hintSquare.setAttribute('data-animation', 'flip-out'), 100)
@@ -117,6 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 icon.setAttribute('class', 'fa-solid fa-angles-down')
             } else {
                 icon.setAttribute('class', 'fa-solid fa-check')
+                easyModeButton.disabled = false
                 guessInput.style.display = 'none'
                 guessButton.style.display = 'none'
                 copyButton.style.display = 'block'
@@ -124,6 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById('answer').innerText = targetCountry.toUpperCase() + '\nPopulation: ' + targetPopulation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
             if (targetPopulation !== populations[countries.indexOf(guess)] && guesses.length === 7) {
+                easyModeButton.disabled = false
                 guessInput.style.display = 'none'
                 guessButton.style.display = 'none'
                 copyButton.style.display = 'block'

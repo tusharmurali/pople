@@ -3,7 +3,7 @@
     --title: #1a1a1b;
     --text: #ffffff;
     --description: #787c7e;
-    --checked: #538d4e;
+    --disabled: #c0392b;
     --icon: #878a8c;
 }
 
@@ -80,6 +80,7 @@ header {
     font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -296,8 +297,9 @@ input:checked + .slider {
     background-color: var(--icon);
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px var(--checked);
+input:disabled + .slider {
+    background-color: var(--disabled);
+    cursor: not-allowed;
 }
 
 input:checked + .slider:before {
