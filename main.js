@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const prevHash = localStorage.getItem('hash')
     let d = new Date()
+    d = new Date(d.getTime() + ((new Date()).getTimezoneOffset() + 600) * 60000)
     d.setHours(0, 0, 0, 0)
     let string = (+d).toString(36)
     let hash = 0
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.setItem('hash', String(hash))
     const targetCountry = countries[hash % 150]
     const targetPopulation = populations[hash % 150]
+    const targetMagnitude = Math.floor(Math.log(targetPopulation) / Math.LN10 + 0.000000001)
 
     const root = document.documentElement
     const guessInput = document.getElementById('guessInput')
@@ -106,10 +108,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             hintSquare.setAttribute('data-animation', 'flip-in')
             setTimeout(() => hintSquare.setAttribute('data-animation', 'flip-out'), 100)
             let icon = document.createElement('i')
-            if (targetPopulation > populations[countries.indexOf(guess)]) {
-                icon.setAttribute('class', 'fa-solid fa-arrow-up')
+            const magnitude = Math.floor(Math.log(populations[countries.indexOf(guess)]) / Math.LN10 + 0.000000001)
+            if (targetMagnitude - magnitude > 0) {
+                icon.setAttribute('class', 'fa-solid fa-angles-up')
+            } else if (targetPopulation > populations[countries.indexOf(guess)]) {
+                icon.setAttribute('class', 'fa-solid fa-angle-up')
             } else if (targetPopulation < populations[countries.indexOf(guess)]) {
-                icon.setAttribute('class', 'fa-solid fa-arrow-down')
+                icon.setAttribute('class', 'fa-solid fa-angle-down')
+            } else if (magnitude - targetMagnitude > 0) {
+                icon.setAttribute('class', 'fa-solid fa-angles-down')
             } else {
                 icon.setAttribute('class', 'fa-solid fa-check')
                 guessInput.style.display = 'none'
@@ -147,13 +154,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => square.removeAttribute('data-animation'), 1000)
         }
 
-        let game = 'Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' ' + guesses.length + '/8\n'
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        let game = 'Pople ' + d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + guesses.length + '/8\n'
         for (let i = 1; i <= 8; i++) {
             const icon = document.getElementById(String(i * 2)).childNodes[0]
             if (icon) {
                 const classes = icon.getAttribute('class')
-                if (classes.includes('fa-arrow-up')) game += '⬆️\n'
-                else if (classes.includes('fa-arrow-down')) game += '⬇️\n'
+                if (classes.includes('fa-angles-up')) game += '⏫\n'
+                else if (classes.includes('fa-angle-up')) game += '🔼\n'
+                else if (classes.includes('fa-angle-down')) game += '🔽\n'
+                else if (classes.includes('fa-angles-down')) game += '⏬\n'
                 else game += '☑️\n'
             } else {
                 break
@@ -161,7 +171,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         game += 'https://tusharmurali.github.io/pople'
         if (!game.includes('☑️'))
-            game = game.replace('Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' ' + guesses.length + '/8\n','Pople ' + d.getDate() + '/' + (d.getMonth() + 1) + ' X/8\n')
+            game = game.replace('Pople ' + d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + guesses.length + '/8\n','Pople ' + d.getDate() + ' ' + monthNames[d.getMonth()] + ' X/8\n')
         navigator.clipboard.writeText(game)
     })
     instructionsButton.addEventListener('click', () => {
