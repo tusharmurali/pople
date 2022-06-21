@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.setItem('hash', String(hash))
     const targetCountry = countries[hash % 150]
     const targetPopulation = populations[hash % 150]
-    const targetMagnitude = Math.floor(Math.log(targetPopulation) / Math.LN10 + 0.000000001)
 
     const root = document.documentElement
     const guessInput = document.getElementById('guessInput')
@@ -108,14 +107,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             hintSquare.setAttribute('data-animation', 'flip-in')
             setTimeout(() => hintSquare.setAttribute('data-animation', 'flip-out'), 100)
             let icon = document.createElement('i')
-            const magnitude = Math.floor(Math.log(populations[countries.indexOf(guess)]) / Math.LN10 + 0.000000001)
-            if (targetMagnitude - magnitude > 0) {
+            if (targetPopulation / 10 > populations[countries.indexOf(guess)]) {
                 icon.setAttribute('class', 'fa-solid fa-angles-up')
             } else if (targetPopulation > populations[countries.indexOf(guess)]) {
                 icon.setAttribute('class', 'fa-solid fa-angle-up')
             } else if (targetPopulation < populations[countries.indexOf(guess)]) {
                 icon.setAttribute('class', 'fa-solid fa-angle-down')
-            } else if (magnitude - targetMagnitude > 0) {
+            } else if (targetPopulation * 10 < populations[countries.indexOf(guess)]) {
                 icon.setAttribute('class', 'fa-solid fa-angles-down')
             } else {
                 icon.setAttribute('class', 'fa-solid fa-check')
